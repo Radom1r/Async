@@ -13,7 +13,6 @@ POSTGRS_PORT = os.getenv("POSTGRES_PORT", "5431")
 
 PG_DSN = f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRS_PORT}/{POSTGRES_DB}"
 
-
 engine = create_async_engine(PG_DSN)
 Session = async_sessionmaker(engine, expire_on_commit=True)
 
@@ -26,19 +25,19 @@ class SwapiPeople(Base):
     __tablename__ = "swapi_people"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    birth_year: Mapped[str] = mapped_column(String, nullable=False)
-    eye_color: Mapped[str] = mapped_column(String, nullable=False)
-    films: Mapped[str] = mapped_column(String, nullable=False)
-    gender: Mapped[str] = mapped_column(String, nullable=False)
-    hair_color: Mapped[str] = mapped_column(String, nullable=False)
-    height: Mapped[str] = mapped_column(String, nullable=False)
-    homeworld: Mapped[str] = mapped_column(String, nullable=False)
-    mass: Mapped[str] = mapped_column(String, nullable=False)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    skin_color: Mapped[str] = mapped_column(String, nullable=False)
-    species: Mapped[str] = mapped_column(String, nullable=False)
-    starships: Mapped[str] = mapped_column(String, nullable=False)
-    vehicles: Mapped[str] = mapped_column(String, nullable=False)
+    birth_year: Mapped[str] = mapped_column(String, nullable=True)
+    eye_color: Mapped[str] = mapped_column(String, nullable=True)
+    films: Mapped[str] = mapped_column(String, nullable=True)
+    gender: Mapped[str] = mapped_column(String, nullable=True)
+    hair_color: Mapped[str] = mapped_column(String, nullable=True)
+    height: Mapped[str] = mapped_column(String, nullable=True)
+    homeworld: Mapped[str] = mapped_column(String, nullable=True)
+    mass: Mapped[str] = mapped_column(String, nullable=True)
+    name: Mapped[str] = mapped_column(String, nullable=True)
+    skin_color: Mapped[str] = mapped_column(String, nullable=True)
+    species: Mapped[str] = mapped_column(String, nullable=True)
+    starships: Mapped[str] = mapped_column(String, nullable=True)
+    vehicles: Mapped[str] = mapped_column(String, nullable=True)
 
 
 async def init_db():
