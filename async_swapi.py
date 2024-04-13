@@ -1,6 +1,5 @@
 import asyncio
 import aiohttp
-from pprint import pprint
 from more_itertools import chunked
 
 from models import Session, SwapiPeople, close_db, init_db
@@ -46,7 +45,7 @@ async def main():
             session = aiohttp.ClientSession()
             homeworld = await session.get(person.get('homeworld'))
             home_json = await homeworld.json()
-            for param in ['species', 'starships', 'vehicles', 'films', 'homeworld']:
+            for param in ['species', 'starships', 'vehicles', 'films',]:
                 qualities = []
                 for quality in person.get(param):
                     quality_name = await session.get(quality)
