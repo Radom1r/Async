@@ -46,31 +46,17 @@ async def main():
             session = aiohttp.ClientSession()
             homeworld = await session.get(person.get('homeworld'))
             home_json = await homeworld.json()
-            films = []
-            species = []
-            starships = []
-            vehicles = []
-            for film in person.get('films'):
-                film_name = await session.get(film)
-                film_json = await film_name.json()
-                films.append(film_json['title'])
-            for specie in person.get('species'):
-                specie_name = await session.get(specie)
-                specie_json = await specie_name.json()
-                species.append(specie_json['name'])
-            for starship in person.get('starships'):
-                starship_name = await session.get(starship)
-                starship_json = await starship_name.json()
-                starships.append(starship_json['name'])
-            for vehicle in person.get('vehicles'):
-                vehicle_name = await session.get(vehicle)
-                vehicle_json = await vehicle_name.json()
-                vehicles.append(vehicle_json['name'])
+            for param in ['species', 'starships', 'vehicles', 'films', 'homeworld']:
+                qualities = []
+                for quality in person.get(param):
+                    quality_name = await session.get(quality)
+                    quality_json = await quality_name.json()
+                    if param == 'films':
+                        qualities.append(quality_json['title'])
+                    else:
+                        qualities.append(quality_json['name'])
+                person[param] = ', '.join(qualities)
             person['homeworld'] = home_json['name']
-            person['films'] = ', '.join(films)
-            person['species'] = ', '.join(species)
-            person['starships'] = ', '.join(starships)
-            person['vehicles'] = ', '.join(vehicles)
             await session.close()
         asyncio.create_task(insert_people(result))
     await close_db()
